@@ -1,6 +1,6 @@
 {
   "name": "react-native-beu-call-sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "BeU Call SDK",
   "source": "./src/index.tsx",
   "main": "dist/index.js",
@@ -8,6 +8,7 @@
   "files": [
     "src",
     "lib",
+    "dist",
     "android",
     "ios",
     "cpp",
