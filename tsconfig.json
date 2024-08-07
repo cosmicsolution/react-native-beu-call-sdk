@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "rootDir": ".",
+    "outDir": "dist",
+    "rootDir": "src",
     "paths": {
       "react-native-beu-call-sdk": ["./src/index"]
     },
@@ -9,10 +10,12 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react-jsx",
-    "lib": ["ESNext"],
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "noEmit": true,
+    "lib": ["es6"],
+    "module": "es6",
+    "moduleResolution": "node",
+    "noEmit": false,
+    "declaration": true,
+    "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "noImplicitUseStrict": false,
@@ -23,7 +26,8 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "ESNext",
+    "target": "es5",
     "verbatimModuleSyntax": true
-  }
+  },
+  "exclude": ["node_modules", "dist", "android", "examples", "ios"]
 }

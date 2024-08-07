@@ -8,7 +8,8 @@ import com.facebook.react.uimanager.ViewManager
 
 class BeuCallSdkPackage : ReactPackage {
   override fun createNativeModules(reactContext: ReactApplicationContext): List<NativeModule> {
-    return listOf(BeuCallSdkModule(reactContext))
+    //
+    return listOf(BeuCallSdkModule.getInstance(reactContext, realContext = true))
   }
 
   override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {

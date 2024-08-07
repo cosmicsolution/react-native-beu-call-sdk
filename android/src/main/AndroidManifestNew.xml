@@ -1,2 +1,27 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+  <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+  <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+  <application>
+    <meta-data android:name="com.onesignal.NotificationServiceExtension"
+      android:value="com.beucallsdk.NotificationServiceExtension" />
+
+    <activity
+      android:name="com.beucallsdk.FakeCallActivity"
+      android:excludeFromRecents="true"
+      android:exported="true"
+      android:noHistory="true"
+      android:taskAffinity=""
+      android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+    <receiver
+      android:name=".CallRejectReceiver"
+      android:exported="true">
+      <intent-filter>
+        <action android:name="com.beucallsdk.REJECT_CALL" />
+      </intent-filter>
+    </receiver>
+  </application>
 </manifest>
