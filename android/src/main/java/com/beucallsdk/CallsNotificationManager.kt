@@ -24,7 +24,7 @@ object CallsNotificationManager {
   }
 
   private fun createCallsChannel(context: Context) {
-    Log.d("VDEV", "create call channel....")
+    Log.d("BeuCallSdk", "create call channel....")
     if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.O) return
 
     val manager = context.getSystemService(NotificationManager::class.java)
@@ -45,16 +45,17 @@ object CallsNotificationManager {
   }
 
   fun displayCall(context: Context, notification: IDisplayableMutableNotification) {
-    val packageName = context.applicationContext.packageName
-    val focusIntent = context.packageManager.getLaunchIntentForPackage(packageName)!!
-      .cloneFilter()
-    val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, focusIntent, FLAG_IMMUTABLE or FLAG_UPDATE_CURRENT)
+//    val packageName = context.applicationContext.packageName
+//    val focusIntent = context.packageManager.getLaunchIntentForPackage(packageName)!!
+//      .cloneFilter()
+//    val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, focusIntent, FLAG_IMMUTABLE or FLAG_UPDATE_CURRENT)
 
 //    val acceptIntent = focusIntent.apply {
 //      flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
 //    }
 //    val acceptPendingIntent = PendingIntent.getActivity(context, 0, acceptIntent, FLAG_IMMUTABLE or FLAG_UPDATE_CURRENT)
 
+    val callerName = notification.additionalData?.getString("callerName") ?: "BeU"
     val rejectIntent = Intent(context, FakeCallActivity::class.java)
     rejectIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
     rejectIntent.putExtra("action", "reject")
@@ -98,16 +99,16 @@ object CallsNotificationManager {
     )
       .setSmallIcon(android.R.drawable.sym_call_incoming)
       .setVibrate(pattern)
-      .setContentTitle("Incoming call")
-      .setContentText("BeU is calling")
+      .setContentTitle("Cuộc gọi đến")
+      .setContentText("$callerName đang gọi...")
       .setDefaults(Notification.DEFAULT_ALL)
       .setPriority(NotificationCompat.PRIORITY_MAX)
       .setCategory(NotificationCompat.CATEGORY_CALL)
       .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
       .setFullScreenIntent(fullScreenPendingIntent, true)
-      .setStyle(NotificationCompat.BigTextStyle().bigText("REDiMED is calling"))
-      .addAction(android.R.drawable.sym_action_call, "Accept", acceptPendingIntent)
-      .addAction(android.R.drawable.ic_delete, "Reject", rejectPendingIntent)
+      .setStyle(NotificationCompat.BigTextStyle().bigText("$callerName đang gọi..."))
+      .addAction(android.R.drawable.sym_action_call, "Chấp nhận", acceptPendingIntent)
+      .addAction(android.R.drawable.ic_delete, "Từ chối", rejectPendingIntent)
       .setOngoing(true)
       .setAutoCancel(false)
       .setColorized(true)

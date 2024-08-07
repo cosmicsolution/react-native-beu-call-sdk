@@ -20,10 +20,10 @@ import com.onesignal.notifications.INotificationServiceExtension
 
 class NotificationServiceExtension : INotificationServiceExtension {
   companion object {
-    const val TAG = "VDEV"
+    const val TAG = "BeuCallSdk"
   }
   override fun onNotificationReceived(event: INotificationReceivedEvent) {
-    Log.d("VDEV", "onNotificationReceived ${event.notification.title}")
+    Log.d(TAG, "onNotificationReceived ${event.notification.title}")
 
     // Check the notification type is call?
     // RING: --> display call notification

@@ -14,7 +14,7 @@ class FakeCallActivity: Activity() {
 
   override fun onResume() {
     super.onResume()
-    Log.d("VDEV", "FakeCallActivity onResume")
+    Log.d("BeuCallSdk", "FakeCallActivity onResume")
     processCallIntent()
     finish()
   }
@@ -32,7 +32,7 @@ class FakeCallActivity: Activity() {
     // Extract the extras
     val action = intent.getStringExtra("action")
 
-    Log.d("VDEV", "Action: $action")
+    Log.d("BeuCallSdk", "Action: $action")
     val callInfoStr = intent.getStringExtra("callInfo")
     callInfoStr?.let {
       val callInfoJson = JSONObject(callInfoStr)
@@ -42,7 +42,7 @@ class FakeCallActivity: Activity() {
 
     // Use the extracted variables as needed
     // For example, you could log them
-    Log.d("VDEV", "Action: $action, CallerId: $callInfoStr")
+    Log.d("BeuCallSdk", "Action: $action, caller info: $callInfoStr")
     if (action == "accept") {
       bringAppToForeground()
     }

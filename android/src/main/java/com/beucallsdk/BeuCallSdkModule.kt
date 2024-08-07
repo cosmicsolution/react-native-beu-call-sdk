@@ -25,14 +25,14 @@ class BeuCallSdkModule(reactContext: ReactApplicationContext) :
   }
 
   private fun sendEvent(eventName: String, params: WritableMap?) {
-    Log.d("VDEV", "sendEvent $eventName data: $params")
+    Log.d("BeuCallSdk", "sendEvent $eventName data: $params")
     reactContext
       .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
       .emit(eventName, params)
   }
 
   fun sendNotificationData(info: JSONObject) {
-    sendEvent("IncomingCallInfoReceived", JSONConverter.convertJsonToMap(info))
+    sendEvent("receiveIncomingCallPayload", JSONConverter.convertJsonToMap(info))
   }
 
   private var listenerCount = 0
@@ -41,9 +41,6 @@ class BeuCallSdkModule(reactContext: ReactApplicationContext) :
   @ReactMethod
   fun multiply(a: Double, b: Double, promise: Promise) {
     Log.d("BeuCallSdk", "multiply called")
-    sendEvent("IncomingCallInfoReceived", Arguments.createMap().apply {
-      putString("test", "test")
-    })
     promise.resolve(a * b)
   }
 
@@ -67,7 +64,7 @@ class BeuCallSdkModule(reactContext: ReactApplicationContext) :
   companion object {
     var instance: BeuCallSdkModule? = null
       private set
-    const val TAG = "VDEV"
+    const val TAG = "BeuCallSdk"
 
     fun getInstance(reactContext: ReactApplicationContext, realContext: Boolean = false): NativeModule {
       if (instance == null) {
@@ -88,7 +85,7 @@ class BeuCallSdkModule(reactContext: ReactApplicationContext) :
   }
 
   private fun setContext(reactContext: ReactApplicationContext) {
-    Log.d(TAG, "[RNCallKeepModule] updating react context");
+    Log.d(TAG, "updating react context");
     this.reactContext = reactContext;
   }
 }
