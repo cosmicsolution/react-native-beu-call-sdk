@@ -50,16 +50,20 @@ class BeuCallSdkModule(reactContext: ReactApplicationContext) :
   }
 
   @ReactMethod
+  fun getCacheNotification(promise: Promise) {
+    Log.d("BeuCallSdk", "get cached notification called")
+    try {
+      val lastNotification = CacheUtils.getAndRemove(reactContext, CacheUtils.LAST_NOTIFICATION)
+      promise.resolve(lastNotification)
+    } catch (e: Exception) {
+      promise.resolve(e);
+    }
+  }
+
+  @ReactMethod
   fun addListener(eventName: String) {
     if (listenerCount == 0) {
       // Set up any upstream listeners or background tasks as necessary
-    }
-
-    if (eventName == "receiveIncomingCallPayload") {
-      val lastNotification = CacheUtils.getAndRemove(reactContext, CacheUtils.LAST_NOTIFICATION)
-      lastNotification?.let {
-        sendNotificationData(JSONObject(lastNotification))
-      }
     }
 
     listenerCount += 1

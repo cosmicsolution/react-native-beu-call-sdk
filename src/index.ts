@@ -44,6 +44,10 @@ export function multiply(a: number, b: number): Promise<number> {
   return BeuCallSdk.multiply(a, b);
 }
 
+export function getCacheNotification(): Promise<string | undefined | null> {
+  return BeuCallSdk.getCacheNotification();
+}
+
 export function addEventListener<K extends Events>(
   event: K,
   listener: (event: EventsPayload[K]) => void

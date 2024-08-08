@@ -29,6 +29,9 @@ function isValidCallback(handler) {
 export function multiply(a, b) {
     return BeuCallSdk.multiply(a, b);
 }
+export function getCacheNotification() {
+    return BeuCallSdk.getCacheNotification();
+}
 export function addEventListener(event, listener) {
     if (!isNativeModuleLoaded(BeuCallSdk))
         return;

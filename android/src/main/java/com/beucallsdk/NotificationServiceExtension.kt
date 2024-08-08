@@ -34,7 +34,7 @@ class NotificationServiceExtension : INotificationServiceExtension {
 
     val type = additionalData?.get("type")
     if (type == "call") {
-      event.preventDefault()
+      event.preventDefault(discard = true)
       val action = additionalData?.get("action")
 
       if (action == "ring") {
