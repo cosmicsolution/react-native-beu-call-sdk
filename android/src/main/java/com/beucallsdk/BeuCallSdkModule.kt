@@ -17,8 +17,8 @@ class BeuCallSdkModule(reactContext: ReactApplicationContext) :
   private lateinit var reactContext: ReactApplicationContext
 
   init {
-        CallsNotificationManager.initChannels(context = reactContext.applicationContext)
-    }
+    CallsNotificationManager.initChannels(context = reactContext.applicationContext)
+  }
 
   override fun getName(): String {
     return NAME
@@ -31,8 +31,13 @@ class BeuCallSdkModule(reactContext: ReactApplicationContext) :
       .emit(eventName, params)
   }
 
-  fun sendNotificationData(info: JSONObject) {
-    sendEvent("receiveIncomingCallPayload", JSONConverter.convertJsonToMap(info))
+  fun sendNotificationData(info: JSONObject): Boolean {
+    if (listenerCount > 0) {
+      sendEvent("receiveIncomingCallPayload", JSONConverter.convertJsonToMap(info))
+      return true
+    }
+
+    return false
   }
 
   private var listenerCount = 0
@@ -48,6 +53,13 @@ class BeuCallSdkModule(reactContext: ReactApplicationContext) :
   fun addListener(eventName: String) {
     if (listenerCount == 0) {
       // Set up any upstream listeners or background tasks as necessary
+    }
+
+    if (eventName == "receiveIncomingCallPayload") {
+      val lastNotification = CacheUtils.getAndRemove(reactContext, CacheUtils.LAST_NOTIFICATION)
+      lastNotification?.let {
+        sendNotificationData(JSONObject(lastNotification))
+      }
     }
 
     listenerCount += 1

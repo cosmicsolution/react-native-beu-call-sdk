@@ -52,10 +52,12 @@ export function addEventListener<K extends Events>(
   if (!isValidCallback(listener)) return;
 
   eventManager.addEventListener(event, listener);
+  BeuCallSdk.addListener(event);
 }
 
 export function removeEventListeners(type: Events): void {
-  return eventManager.removeEventListeners(type);
+  eventManager.removeEventListeners(type);
+  BeuCallSdk.removeListeners(1);
 }
 
 export function removeEventListener<K extends Events>(

@@ -35,9 +35,11 @@ export function addEventListener(event, listener) {
     if (!isValidCallback(listener))
         return;
     eventManager.addEventListener(event, listener);
+    BeuCallSdk.addListener(event);
 }
 export function removeEventListeners(type) {
-    return eventManager.removeEventListeners(type);
+    eventManager.removeEventListeners(type);
+    BeuCallSdk.removeListeners(1);
 }
 export function removeEventListener(eventName, handler) {
     return eventManager.removeEventListener(eventName, handler);

@@ -37,7 +37,16 @@ class FakeCallActivity: Activity() {
     callInfoStr?.let {
       val callInfoJson = JSONObject(callInfoStr)
       callInfoJson.put("answer", action)
-      BeuCallSdkModule.instance?.sendNotificationData(callInfoJson)
+      try {
+        val success = BeuCallSdkModule.instance?.sendNotificationData(callInfoJson) ?: false
+        Log.d("BeuCallSdk", "sendNotificationData success: $success sdk null? ${BeuCallSdkModule.instance == null}")
+        if (!success) {
+          CacheUtils.cache(this, CacheUtils.LAST_NOTIFICATION, callInfoStr)
+        }
+      } catch (e: Exception) {
+        Log.e("BeuCallSdk", "sendNotificationData error: $e")
+        CacheUtils.cache(this, CacheUtils.LAST_NOTIFICATION, callInfoStr)
+      }
     }
 
     // Use the extracted variables as needed
