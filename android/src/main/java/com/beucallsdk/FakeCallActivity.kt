@@ -41,11 +41,11 @@ class FakeCallActivity: Activity() {
         val success = BeuCallSdkModule.instance?.sendNotificationData(callInfoJson) ?: false
         Log.d("BeuCallSdk", "sendNotificationData success: $success sdk null? ${BeuCallSdkModule.instance == null}")
         if (!success) {
-          CacheUtils.cache(this, CacheUtils.LAST_NOTIFICATION, callInfoStr)
+          CacheUtils.cache(this, CacheUtils.LAST_NOTIFICATION, callInfoJson.toString())
         }
       } catch (e: Exception) {
         Log.e("BeuCallSdk", "sendNotificationData error: $e")
-        CacheUtils.cache(this, CacheUtils.LAST_NOTIFICATION, callInfoStr)
+        CacheUtils.cache(this, CacheUtils.LAST_NOTIFICATION, callInfoJson.toString())
       }
     }
 
