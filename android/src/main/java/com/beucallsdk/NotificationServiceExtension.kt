@@ -30,18 +30,22 @@ class NotificationServiceExtension : INotificationServiceExtension {
     // RING_ACCEPTED: --> dismiss call notification -> open react native app with call data
     // RING_REJECTED: --> dismiss call notification -> open react native app with call data
     // HANGUP: --> dismiss call notification
-    val additionalData = event.notification.additionalData
+    val additionalData = event.notification.additionalData ?: return
 
-    val type = additionalData?.get("type")
-    if (type == "call") {
-      event.preventDefault(discard = true)
-      val action = additionalData?.get("action")
+    try {
+      val type = additionalData.get("type")
+      if (type == "call") {
+        event.preventDefault(discard = true)
+        val action = additionalData.get("action")
 
-      if (action == "ring") {
-        CallsNotificationManager.displayCall(event.context, event.notification)
-      } else if (action == "hangup") {
-        CallsNotificationManager.dismissCall(context = event.context)
+        if (action == "ring") {
+          CallsNotificationManager.displayCall(event.context, event.notification)
+        } else if (action == "hangup") {
+          CallsNotificationManager.dismissCall(context = event.context)
+        }
       }
+    } catch (e: Exception) {
+      Log.e(TAG, "onNotificationReceived error: $e")
     }
 
   }

@@ -34,14 +34,20 @@ object CallsNotificationManager {
       .setUsage(AudioAttributes.USAGE_NOTIFICATION_RINGTONE)
       .build()
 
-    val channel = NotificationChannel(INCOMING_CALL_CHANNEL_ID, "Calls", NotificationManager.IMPORTANCE_HIGH).apply {
+    manager.createNotificationChannel(NotificationChannel(INCOMING_CALL_CHANNEL_ID, "Calls", NotificationManager.IMPORTANCE_HIGH).apply {
       setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE), audioAttributes)
       vibrationPattern = VIBRATE_PATTERN
       enableLights(true)
       enableVibration(true)
-    }
+    })
 
-    manager.createNotificationChannel(channel)
+    manager.createNotificationChannel(NotificationChannel(MESSAGES_CHANNEL_ID, "Messages", NotificationManager.IMPORTANCE_HIGH).apply {
+      enableLights(true)
+      enableVibration(true)
+      setShowBadge(true)
+      lockscreenVisibility = Notification.VISIBILITY_PRIVATE
+
+    })
   }
 
   fun displayCall(context: Context, notification: IDisplayableMutableNotification) {
